@@ -15,8 +15,8 @@ students = [
 
 # prints header txt
 def print_header
-  puts "The students of Villains Academy"
-  puts "-------------"
+  puts "The students of Villains Academy".center(50)
+  puts "-------------".center(50)
 end
 
 # prints the key value pairs of the hash given as the arguement 
@@ -30,7 +30,7 @@ end
 def print(list)
   count = 0
   while count < list.length
-    puts "#{list[count].fetch(:name)} (#{list[count].fetch(:cohort)} cohort)"
+    puts "#{list[count].fetch(:name)} (#{list[count].fetch(:cohort)} cohort)".center(50)
     count += 1
   end
 end
@@ -38,18 +38,18 @@ end
 
 # prints footer text showing the total number of students in the given arguement 
 def print_footer(names)
-  puts "Overall we have #{names.count} great students"
+  puts "Overall we have #{names.count} great students".center(50)
 end
 
 # allows user to enter a list of students names which are added to the november cohort
 def input_students
-  puts "Please enter the name of the students"
-  puts "To finish, just hit return twice"
+  puts "Please enter the name of the students".center(50)
+  puts "To finish, just hit return twice".center(50)
   students = []
   name = gets.chomp
   while !name.empty? do
     students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students"
+    puts "Now we have #{students.count} students".center(50)
     name = gets.chomp
   end
   students
@@ -58,7 +58,7 @@ end
 # adds index starting at 1. for each entry
 def students_index(list)
   list.each.with_index(1) do |value, index|
-    puts "#{index}. #{value[:name]} (#{value[:cohort]} cohort)" 
+    puts "#{index}. #{value[:name]} (#{value[:cohort]} cohort)".center(50)
   end
 end
 
@@ -68,22 +68,22 @@ end
 # just thought I could have made the method create modified hash for 
 # each time it recieved a letter, deleting all entries which don't conform.
 def begins_with(list)
-  puts "Specify a letter to search names with:"
+  puts "Specify a letter to search names with:".center(50)
   letter = gets.chomp
   while !letter.empty? do
     counter = 0
     while letter.length > 1
-      puts "Please enter only one character."
+      puts "Please enter only one character.".center(50)
       letter = gets.chomp
     end
     list.each do |student|
       name = student[:name]
       if name[0] == letter.upcase
         counter = counter + 1
-        puts "#{student[:name]} (#{student[:cohort]} cohort)"
+        puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
       end
       if student == list[list.length - 1] && counter == 0
-        puts "There are no students who's name begins with #{letter.upcase}."
+        puts "There are no students who's name begins with #{letter.upcase}.".center(50)
       end
     end
     letter = gets.chomp
@@ -98,14 +98,15 @@ def short_names(list)
       list_new << student
     end
   end
-  puts "These names are shorter than 12 characters in length."
+  puts "These names are shorter than 12 characters in length.".center(50)
   print(list_new)
 end
 
 # call methods
-# students_index(students)
-# print_header()
-# print(students)
-# print_footer(students)
-# begins_with(students)
-# short_names(students)
+
+print_header()
+print(students)
+print_footer(students)
+students_index(students)
+begins_with(students)
+short_names(students)

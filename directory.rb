@@ -13,6 +13,8 @@ students = [
   {name: "Norman Bates", cohort: :november, hobbies: "Taxidermy", weight: 82, height: 185}
 ]
 
+
+
 # prints header txt
 def print_header
   puts "The students of Villains Academy".center(50)
@@ -43,16 +45,76 @@ end
 
 # allows user to enter a list of students names which are added to the november cohort
 def input_students
-  puts "Please enter the name of the students".center(50)
-  puts "To finish, just hit return twice".center(50)
+  puts "To add students to the database you will require".center(50)
+  puts "their name and specific cohort start month.".center(50)
+  puts "To finish, type \"exit\" at the name entry stage.".center(50)
+  months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ] 
+  time = Time.new
+  name = ""
+  cohort = ""
   students = []
-  name = gets.chomp
-  while !name.empty? do
-    students << {name: name, cohort: :november}
-    puts "Now we have #{students.count} students".center(50)
-    name = gets.chomp
+  cohort_correct = false
+  name_correct = false
+
+  loop do
+
+    while name_correct == false
+      puts "Please enter the name of the student:".center(50) 
+      name = gets.chomp
+      case name
+      when "exit"
+        break
+      when ""
+        puts "You can't leave the name field blank, try again".center(50)
+      else
+        puts "You entered \"#{name}\" is this correct? Y/N".center(50)
+        result = gets.chomp
+        if result.downcase == "y"
+          name_correct = true
+        else
+          name_correct = false
+        end
+      end
+    end
+    # breaking out of the nested loops
+    break if name == "exit"
+
+    while cohort_correct == false
+      puts "Enter the month that #{name}'s cohort starts:".center(50)
+      cohort = gets.chomp
+      case cohort.downcase 
+      when ""
+        # this date make the default cohort start-date 2 months after the current month
+        month_number = time.month + 1
+        # wrap month around after december (months_number representing the index of the array months)
+        if month_number > 11
+          month_number -= 12
+        end
+        cohort = months[month_number]
+        cohort_correct = true
+      when "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"
+        cohort_correct = true
+      else
+        puts "You've entered the month incorrectly, you typed \"#{cohort}\",  try again.".center(50)
+      end
+    end
+
+    while !name.empty? && !cohort.empty? do
+      students << {name: name, cohort: cohort.to_sym}
+      if students.count == 1
+        puts "Now we have 1 student!".center(50)
+        print(students)
+      else
+        puts "Now we have #{students.count} students!".center(50)
+        print(students)
+      end
+      name = ""
+      cohort = ""
+      name_correct = false
+      cohort_correct = false
+    end
   end
-  students
+  
 end
 
 # adds index starting at 1. for each entry
@@ -103,10 +165,10 @@ def short_names(list)
 end
 
 # call methods
-
-print_header()
-print(students)
-print_footer(students)
-students_index(students)
-begins_with(students)
-short_names(students)
+input_students()
+# print_header()
+# print(students)
+# print_footer(students)
+# students_index(students)
+# begins_with(students)
+# short_names(students)

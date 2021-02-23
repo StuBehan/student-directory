@@ -28,8 +28,27 @@ def print_footer(names)
   puts "Overall we have #{names.count} great students"
 end
 
-# call methods
+def input_students
+  puts "Please enter the name of the students"
+  puts "To finish, just hit return twice"
+  students = []
+  name = gets.chomp
+  while !name.empty? do
+    students << {name: name, cohort: :november}
+    puts "Now we have #{students.count} students"
+    name = gets.chomp
+  end
+  students
+end
 
+def students_index(list)
+  list.each.with_index(1) do |value, index|
+    puts "#{index}. #{value[:name]} (#{value[:cohort]} cohort)" 
+  end
+end
+
+# call methods
+students_index(students)
 print_header()
 print(students)
 print_footer(students)

@@ -20,11 +20,21 @@ def print_header
 end
 
 # prints the key value pairs of the hash given as the arguement 
-def print(names)
-  names.each do |student|
-    puts "#{student[:name]} (#{student[:cohort]} cohort)"
+# def print(names)
+#   names.each do |student|
+#     puts "#{student[:name]} (#{student[:cohort]} cohort)"
+#   end
+# end
+
+# print rewritten to demonstrate loop control flow
+def print(list)
+  count = 0
+  while count < list.length
+    puts "#{list[count].fetch(:name)} (#{list[count].fetch(:cohort)} cohort)"
+    count += 1
   end
 end
+
 
 # prints footer text showing the total number of students in the given arguement 
 def print_footer(names)
@@ -95,7 +105,7 @@ end
 # call methods
 # students_index(students)
 # print_header()
-# print(students)
+print(students)
 # print_footer(students)
 # begins_with(students)
-short_names(students)
+# short_names(students)

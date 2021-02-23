@@ -1,16 +1,16 @@
 # students listed in an array of key value pairs 
 students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november},
-  {name: "Darth Vader", cohort: :november},
-  {name: "Nurse Ratched", cohort: :november},
-  {name: "Michael Corleone", cohort: :november},
-  {name: "Alex Delarge", cohort: :november},
-  {name: "The Wicked Witch of the West", cohort: :november},
-  {name: "Terminator", cohort: :november},
-  {name: "Freddy Krueger", cohort: :november},
-  {name: "The Joker", cohort: :november},
-  {name: "Joffery Baratheon", cohort: :november},
-  {name: "Norman Bates", cohort: :november}
+  {name: "Dr. Hannibal Lecter", cohort: :november, hobbies: "Music", weight: 76, height: 173},
+  {name: "Darth Vader", cohort: :november, hobbies: "Archeology", weight: 120, height: 203},
+  {name: "Nurse Ratched", cohort: :november, hobbies: "Religion", weight: 55, height: 168},
+  {name: "Michael Corleone", cohort: :november, hobbies: "Volunteer Work", weight: 57, height: 168},
+  {name: "Alex Delarge", cohort: :november, hobbies: "Community Service", weight: 56, height: 152},
+  {name: "The Wicked Witch of the West", cohort: :november, hobbies: "Flying", weight: 64, height: 168},
+  {name: "Terminator", cohort: :november, hobbies: "Travel", weight: 110, height: 183},
+  {name: "Freddy Krueger", cohort: :november, hobbies: "Gardening", weight: 73, height: 177},
+  {name: "The Joker", cohort: :november, hobbies: "Chiropterology", weight: 80, height: 182},
+  {name: "Joffery Baratheon", cohort: :november, hobbies: "Hunting", weight: 60, height: 172},
+  {name: "Norman Bates", cohort: :november, hobbies: "Taxidermy", weight: 82, height: 185}
 ]
 
 # prints header txt
@@ -105,7 +105,7 @@ end
 # call methods
 # students_index(students)
 # print_header()
-print(students)
+# print(students)
 # print_footer(students)
 # begins_with(students)
 # short_names(students)

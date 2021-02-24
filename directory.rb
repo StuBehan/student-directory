@@ -126,6 +126,7 @@ def print_cohort
   end
 end
 
+# runs the interactive menu in the loop
 def interactive_menu
   loop do
     print_menu
@@ -133,18 +134,20 @@ def interactive_menu
   end
 end
 
+# outputs the options for the interactive menu
 def print_menu
   puts "Welcome to the Student Directory".center(70)
   puts "-------------".center(70)
   puts "Please make a selection from the menu".center(70)
   puts "-------------".center(70)
+  puts "1. Input students".center(70)
+  puts "2. Show students".center(70)
+  puts "3. Save the student data to students.csv".center(70)
+  puts "9. Exit".center(70)
 end
 
 # shows the menu
 def selection
-  puts "1. Input students".center(70)
-  puts "2. Show students".center(70)
-  puts "9. Exit".center(70)
   selection = gets.chomp
   case selection
   when "1"
@@ -154,7 +157,7 @@ def selection
     print_student_list
     print_footer
   when "3"
-    puts "#{@students[1]}"
+    save_students
   when "9"
     exit
   else
@@ -210,13 +213,15 @@ def continue
   end
 end
 
-# call methods
-# input_students()
-# print_header()
-# print(students)
-# print_footer(students)
-# students_index(students)
-# begins_with(students)
-# short_names(students)
-# print_cohort(students)
+# saves the @students array to a CSV file
+def save_students
+  file = File.open("students.csv", "w")
+  @students.each do |student|
+    student_data = [student[:name], student[:cohort]]
+    csv_line = student_data.join(",")
+    file.puts csv_line
+  end
+  file.close
+end
+
 interactive_menu

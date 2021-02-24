@@ -13,7 +13,6 @@
   {name: "Norman Bates", cohort: :december, hobbies: "Taxidermy", weight: 82, height: 185}
 ]
 
-
 @months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ]
 # @students = []
 
@@ -76,12 +75,12 @@ end
 # each time it recieved a letter, deleting all entries which don't conform.
 def begins_with
   puts "Specify a letter to search names with:".center(70)
-  letter = gets.chomp
+  letter = STDIN.gets.chomp
   while !letter.empty? do
     counter = 0
     while letter.length > 1
       puts "Please enter only one character.".center(70)
-      letter = gets.chomp
+      letter = STDIN.gets.chomp
     end
     @students.each do |student|
       name = student[:name]
@@ -93,7 +92,7 @@ def begins_with
         puts "There are no students who's name begins with #{letter.upcase}.".center(70)
       end
     end
-    letter = gets.chomp
+    letter = STDIN.gets.chomp
   end
 end
 
@@ -118,7 +117,7 @@ def print_cohort
     puts "#{entry[:cohort]}".center(70)
   end
   puts "Enter a cohort start month to print students in that cohort".center(70)
-  cohort_to_print = gets.strip.downcase.to_sym
+  cohort_to_print = STDIN.gets.strip.downcase.to_sym
   single_cohort = @students.select { |student| student[:cohort] == cohort_to_print }
   single_cohort.each do |student| 
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(70)
@@ -147,7 +146,7 @@ end
 
 # shows the menu
 def selection
-  selection = gets.chomp
+  selection = STDIN.gets.chomp
   case selection
   when "1"
     @students = input_students()
@@ -170,7 +169,7 @@ end
 def enter_name
   loop do
     puts "Please enter the name of the student:".center(70) 
-    name = gets.chomp
+    name = STDIN.gets.chomp
     puts "You entered \"#{name}\" is this correct? Y/N".center(70)
     result = gets.chomp.downcase
     if result == "y"
@@ -185,7 +184,7 @@ def enter_cohort
   time = Time.new 
   loop do
     puts "Enter the month the cohort starts:".center(70)
-    cohort = gets.chomp.downcase
+    cohort = STDIN.gets.chomp.downcase
     if cohort == ""
       month_number = time.month + 1  # this date make the default cohort start-date 2 months after the current month
       if month_number > 11
@@ -208,7 +207,7 @@ end
 # a breaker for exiting entry methods
 def continue
   puts "Do you wish to add more? Y/N".center(70)
-  result = gets.chomp.downcase
+  result = STDIN.gets.chomp.downcase
   if result == "n"
     return false
   end
@@ -226,8 +225,8 @@ def save_students
 end
 
 # load @students from the CSV file
-def load_students
-  file = File.open("students.csv", "r")
+def load_students(filename = "students.csv")
+  file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
     @students << {name: name, cohort: cohort.to_sym}
@@ -235,4 +234,18 @@ def load_students
   file.close
 end
 
+# checks if filename exists and then pushes to load_students else quits
+def try_load_students
+  filename = ARGV.first 
+  return if filename.nil? 
+  if File.exists?(filename) 
+    load_students(filename)
+     puts "Loaded #{@students.count} from #{filename}"
+  else
+    puts "Sorry, #{filename} doesn't exist."
+    exit
+  end
+end
+
+try_load_students
 interactive_menu

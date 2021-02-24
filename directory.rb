@@ -15,8 +15,8 @@ students = [
 
 # prints header txt
 def print_header
-  puts "The students of Villains Academy".center(50)
-  puts "-------------".center(50)
+  puts "The students of Villains Academy".center(70)
+  puts "-------------".center(70)
 end
 
 # prints the key value pairs of the hash given as the arguement 
@@ -30,21 +30,23 @@ end
 def print(list)
   count = 0
   while count < list.length
-    puts "#{list[count].fetch(:name)} (#{list[count].fetch(:cohort)} cohort)".center(50)
+    puts "#{list[count].fetch(:name)} (#{list[count].fetch(:cohort)} cohort)".center(70)
     count += 1
   end
 end
 
 # prints footer text showing the total number of students in the given arguement 
-def print_footer(names)
-  puts "Overall we have #{names.count} great students".center(50)
+def print_footer(list)
+  puts "-------------".center(70)
+  puts "Overall we have #{list.count} great students".center(70)
+  puts "-------------".center(70)
 end
 
 # allows user to enter a list of students names which are added to the november cohort
 def input_students
-  puts "To add students to the database you will require".center(50)
-  puts "their name and specific cohort start month.".center(50)
-  puts "To finish, type \"exit\" at the name entry stage.".center(50)
+  puts "To add students to the database you will require".center(70)
+  puts "their name and specific cohort start month.".center(70)
+  puts "To return to the menu, type \"back\" at the name entry stage.".center(70)
   months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ] 
   time = Time.new
   name = ""
@@ -56,15 +58,15 @@ def input_students
   loop do
 
     while name_correct == false
-      puts "Please enter the name of the student:".center(50) 
+      puts "Please enter the name of the student:".center(70) 
       name = gets.chomp
       case name
-      when "exit"
+      when "back"
         break
       when ""
-        puts "You can't leave the name field blank, try again".center(50)
+        puts "You can't leave the name field blank, try again".center(70)
       else
-        puts "You entered \"#{name}\" is this correct? Y/N".center(50)
+        puts "You entered \"#{name}\" is this correct? Y/N".center(70)
         result = gets.chomp
         if result.downcase == "y"
           name_correct = true
@@ -74,10 +76,10 @@ def input_students
       end
     end
     # breaking out of the nested loops
-    break if name == "exit"
+    break if name == "back"
 
     while cohort_correct == false
-      puts "Enter the month that #{name}'s cohort starts:".center(50)
+      puts "Enter the month that #{name}'s cohort starts:".center(70)
       cohort = gets.chomp
       case cohort.downcase 
       when ""
@@ -92,17 +94,17 @@ def input_students
       when "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december"
         cohort_correct = true
       else
-        puts "You've entered the month incorrectly, you typed \"#{cohort}\",  try again.".center(50)
+        puts "You've entered the month incorrectly, you typed \"#{cohort}\",  try again.".center(70)
       end
     end
 
     while !name.empty? && !cohort.empty? do
       students << {name: name, cohort: cohort.to_sym}
       if students.count == 1
-        puts "Now we have 1 student!".center(50)
+        puts "Now we have 1 student!".center(70)
         print(students)
       else
-        puts "Now we have #{students.count} students!".center(50)
+        puts "Now we have #{students.count} students!".center(70)
         print(students)
       end
       name = ""
@@ -111,13 +113,13 @@ def input_students
       cohort_correct = false
     end
   end
-  
+  return students
 end
 
 # adds index starting at 1. for each entry
 def students_index(list)
   list.each.with_index(1) do |value, index|
-    puts "#{index}. #{value[:name]} (#{value[:cohort]} cohort)".center(50)
+    puts "#{index}. #{value[:name]} (#{value[:cohort]} cohort)".center(70)
   end
 end
 
@@ -127,22 +129,22 @@ end
 # just thought I could have made the method create modified hash for 
 # each time it recieved a letter, deleting all entries which don't conform.
 def begins_with(list)
-  puts "Specify a letter to search names with:".center(50)
+  puts "Specify a letter to search names with:".center(70)
   letter = gets.chomp
   while !letter.empty? do
     counter = 0
     while letter.length > 1
-      puts "Please enter only one character.".center(50)
+      puts "Please enter only one character.".center(70)
       letter = gets.chomp
     end
     list.each do |student|
       name = student[:name]
       if name[0] == letter.upcase
         counter = counter + 1
-        puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
+        puts "#{student[:name]} (#{student[:cohort]} cohort)".center(70)
       end
       if student == list[list.length - 1] && counter == 0
-        puts "There are no students who's name begins with #{letter.upcase}.".center(50)
+        puts "There are no students who's name begins with #{letter.upcase}.".center(70)
       end
     end
     letter = gets.chomp
@@ -157,25 +159,53 @@ def short_names(list)
       list_new << student
     end
   end
-  puts "These names are shorter than 12 characters in length.".center(50)
+  puts "These names are shorter than 12 characters in length.".center(70)
   print(list_new)
 end
 
 # prints only the entered cohort's list of students
 # uses strip instead of chomp with the gets method, this cleans whitespace and LR at both ends of the string
 def print_cohort(list)
-  puts "These are the current active cohorts:".center(50)
+  puts "These are the current active cohorts:".center(70)
   active_cohorts = list.uniq { |student| student[:cohort] }
   active_cohorts.each do |entry|
-    puts "#{entry[:cohort]}".center(50)
+    puts "#{entry[:cohort]}".center(70)
   end
-  puts "Enter a cohort start month to print students in that cohort".center(50)
+  puts "Enter a cohort start month to print students in that cohort".center(70)
   cohort_to_print = gets.strip.downcase.to_sym
   single_cohort = list.select { |student| student[:cohort] == cohort_to_print }
   single_cohort.each do |student| 
-    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
+    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(70)
   end
-  
+end
+
+def interactive_menu
+  puts "Welcome to the Student Directory".center(70)
+  puts "-------------".center(70)
+  puts "Please make a selection from the menu".center(70)
+  puts "-------------".center(70)
+  students = []
+  loop do
+    # print menu options
+    puts "1. Input students".center(70)
+    puts "2. Show students".center(70)
+    puts "9. Exit".center(70)
+    # get selection from user
+    selection = gets.chomp
+    # implement selection
+    case selection
+    when "1"
+      students = input_students()
+    when "2"
+      print_header()
+      print(students)
+      print_footer(students)
+    when "9"
+      exit
+    else
+      puts "That selection is incorrect, try again.".center(70)
+    end
+  end
 end
 
 # call methods
@@ -186,4 +216,5 @@ end
 # students_index(students)
 # begins_with(students)
 # short_names(students)
-print_cohort(students)
+# print_cohort(students)
+interactive_menu()

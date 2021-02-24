@@ -6,14 +6,12 @@ students = [
   {name: "Michael Corleone", cohort: :november, hobbies: "Volunteer Work", weight: 57, height: 168},
   {name: "Alex Delarge", cohort: :november, hobbies: "Community Service", weight: 56, height: 152},
   {name: "The Wicked Witch of the West", cohort: :november, hobbies: "Flying", weight: 64, height: 168},
-  {name: "Terminator", cohort: :november, hobbies: "Travel", weight: 110, height: 183},
-  {name: "Freddy Krueger", cohort: :november, hobbies: "Gardening", weight: 73, height: 177},
-  {name: "The Joker", cohort: :november, hobbies: "Chiropterology", weight: 80, height: 182},
-  {name: "Joffery Baratheon", cohort: :november, hobbies: "Hunting", weight: 60, height: 172},
-  {name: "Norman Bates", cohort: :november, hobbies: "Taxidermy", weight: 82, height: 185}
+  {name: "Terminator", cohort: :december, hobbies: "Travel", weight: 110, height: 183},
+  {name: "Freddy Krueger", cohort: :december, hobbies: "Gardening", weight: 73, height: 177},
+  {name: "The Joker", cohort: :december, hobbies: "Chiropterology", weight: 80, height: 182},
+  {name: "Joffery Baratheon", cohort: :december, hobbies: "Hunting", weight: 60, height: 172},
+  {name: "Norman Bates", cohort: :december, hobbies: "Taxidermy", weight: 82, height: 185}
 ]
-
-
 
 # prints header txt
 def print_header
@@ -36,7 +34,6 @@ def print(list)
     count += 1
   end
 end
-
 
 # prints footer text showing the total number of students in the given arguement 
 def print_footer(names)
@@ -164,11 +161,28 @@ def short_names(list)
   print(list_new)
 end
 
+# prints only the entered cohort's list of students
+def print_cohort(list)
+  puts "These are the current active cohorts:".center(50)
+  active_cohorts = list.uniq { |student| student[:cohort] }
+  active_cohorts.each do |entry|
+    puts "#{entry[:cohort]}".center(50)
+  end
+  puts "Enter a cohort start month to print students in that cohort".center(50)
+  cohort_to_print = gets.chomp.downcase.to_sym
+  single_cohort = list.select { |student| student[:cohort] == cohort_to_print }
+  single_cohort.each do |student| 
+    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)
+  end
+  
+end
+
 # call methods
-input_students()
+# input_students()
 # print_header()
 # print(students)
 # print_footer(students)
 # students_index(students)
 # begins_with(students)
 # short_names(students)
+print_cohort(students)

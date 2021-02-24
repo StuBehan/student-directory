@@ -51,24 +51,16 @@ def input_students
   puts "To add students to the database you will require".center(70)
   puts "their name and specific cohort start month.".center(70)
   puts "To return to the menu, type \"back\" at the name entry stage.".center(70)
-
-
   loop do
-
-    while !name.empty? && !cohort.empty? do
-      @students << {name: name, cohort: cohort.to_sym}
-      if @students.count == 1
-        puts "Now we have 1 student!".center(70)
-        print_student_list
-      else
-        puts "Now we have #{@students.count} students!".center(70)
-        print_student_list
-      end
-      name = ""
-      cohort = ""
-      name_correct = false
-      cohort_correct = false
+    @students << {name: enter_name, cohort: enter_cohort.to_sym}
+    if @students.count == 1
+      puts "Now we have 1 student!".center(70)
+      print_student_list
+    else
+      puts "Now we have #{@students.count} students!".center(70)
+      print_student_list
     end
+    break if continue == false
   end
 end
 
@@ -80,8 +72,7 @@ def students_index
 end
 
 # prints a list of students with names that begin with a 
-# specifc letter with a number of work arounds for incorrect entries
-
+# specifc letter with a number of work arounds for incorrect entries.
 # just thought I could have made the method create modified hash for 
 # each time it recieved a letter, deleting all entries which don't conform.
 def begins_with
@@ -104,7 +95,7 @@ def begins_with
       end
     end
     letter = gets.chomp
-  end 
+  end
 end
 
 # prints only the names from the given arguement that are 11 characters long or fewer
@@ -136,50 +127,56 @@ def print_cohort
 end
 
 def interactive_menu
+  loop do
+    print_menu
+    selection
+  end
+end
+
+def print_menu
   puts "Welcome to the Student Directory".center(70)
   puts "-------------".center(70)
   puts "Please make a selection from the menu".center(70)
   puts "-------------".center(70)
-  loop do
-    # print menu options
-    puts "1. Input students".center(70)
-    puts "2. Show students".center(70)
-    puts "9. Exit".center(70)
-    # get selection from user
-    selection = gets.chomp
-    # implement selection
-    case selection
-    when "1"
-      @students = input_students()
-    when "2"
-      print_header
-      print_student_list
-      print_footer
-    when "3"
-      puts "#{@students[1]}"
-    when "9"
-      exit
-    else
-      puts "That selection is incorrect, try again.".center(70)
-    end
+end
+
+# shows the menu
+def selection
+  puts "1. Input students".center(70)
+  puts "2. Show students".center(70)
+  puts "9. Exit".center(70)
+  selection = gets.chomp
+  case selection
+  when "1"
+    @students = input_students()
+  when "2"
+    print_header
+    print_student_list
+    print_footer
+  when "3"
+    puts "#{@students[1]}"
+  when "9"
+    exit
+  else
+    puts "That selection is incorrect, try again.".center(70)
   end
 end
 
+# refactored from the input_students method for all name entries
 def enter_name
-  puts "Please enter the name of the student:".center(70) 
-  name = gets.chomp
-  while !name.empty?
+  loop do
+    puts "Please enter the name of the student:".center(70) 
+    name = gets.chomp
     puts "You entered \"#{name}\" is this correct? Y/N".center(70)
-    result = gets.chomp
-    if result.downcase == "y"
+    result = gets.chomp.downcase
+    if result == "y"
+      return name
       break
-    else
-      name = gets.chomp
     end
   end
-  return name
 end
 
+# refactored from the input_students for cohort month entry and verification
 def enter_cohort
   time = Time.new 
   loop do
@@ -204,6 +201,15 @@ def enter_cohort
   end
 end
 
+# a breaker for exiting entry methods
+def continue
+  puts "Do you wish to add more? Y/N".center(70)
+  result = gets.chomp.downcase
+  if result == "n"
+    return false
+  end
+end
+
 # call methods
 # input_students()
 # print_header()
@@ -213,5 +219,4 @@ end
 # begins_with(students)
 # short_names(students)
 # print_cohort(students)
-# interactive_menu()
-enter_cohort
+interactive_menu

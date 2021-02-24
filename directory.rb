@@ -162,6 +162,7 @@ def short_names(list)
 end
 
 # prints only the entered cohort's list of students
+# uses strip instead of chomp with the gets method, this cleans whitespace and LR at both ends of the string
 def print_cohort(list)
   puts "These are the current active cohorts:".center(50)
   active_cohorts = list.uniq { |student| student[:cohort] }
@@ -169,7 +170,7 @@ def print_cohort(list)
     puts "#{entry[:cohort]}".center(50)
   end
   puts "Enter a cohort start month to print students in that cohort".center(50)
-  cohort_to_print = gets.chomp.downcase.to_sym
+  cohort_to_print = gets.strip.downcase.to_sym
   single_cohort = list.select { |student| student[:cohort] == cohort_to_print }
   single_cohort.each do |student| 
     puts "#{student[:name]} (#{student[:cohort]} cohort)".center(50)

@@ -1,20 +1,20 @@
 # students listed in an array of key value pairs 
-@students = [
-  {name: "Dr. Hannibal Lecter", cohort: :november, hobbies: "Music", weight: 76, height: 173},
-  {name: "Darth Vader", cohort: :november, hobbies: "Archeology", weight: 120, height: 203},
-  {name: "Nurse Ratched", cohort: :november, hobbies: "Religion", weight: 55, height: 168},
-  {name: "Michael Corleone", cohort: :november, hobbies: "Volunteer Work", weight: 57, height: 168},
-  {name: "Alex Delarge", cohort: :november, hobbies: "Community Service", weight: 56, height: 152},
-  {name: "The Wicked Witch of the West", cohort: :november, hobbies: "Flying", weight: 64, height: 168},
-  {name: "Terminator", cohort: :december, hobbies: "Travel", weight: 110, height: 183},
-  {name: "Freddy Krueger", cohort: :december, hobbies: "Gardening", weight: 73, height: 177},
-  {name: "The Joker", cohort: :december, hobbies: "Chiropterology", weight: 80, height: 182},
-  {name: "Joffery Baratheon", cohort: :december, hobbies: "Hunting", weight: 60, height: 172},
-  {name: "Norman Bates", cohort: :december, hobbies: "Taxidermy", weight: 82, height: 185}
-]
+# @students = [
+#   {name: "Dr. Hannibal Lecter", cohort: :november, hobbies: "Music", weight: 76, height: 173},
+#   {name: "Darth Vader", cohort: :november, hobbies: "Archeology", weight: 120, height: 203},
+#   {name: "Nurse Ratched", cohort: :november, hobbies: "Religion", weight: 55, height: 168},
+#   {name: "Michael Corleone", cohort: :november, hobbies: "Volunteer Work", weight: 57, height: 168},
+#   {name: "Alex Delarge", cohort: :november, hobbies: "Community Service", weight: 56, height: 152},
+#   {name: "The Wicked Witch of the West", cohort: :november, hobbies: "Flying", weight: 64, height: 168},
+#   {name: "Terminator", cohort: :december, hobbies: "Travel", weight: 110, height: 183},
+#   {name: "Freddy Krueger", cohort: :december, hobbies: "Gardening", weight: 73, height: 177},
+#   {name: "The Joker", cohort: :december, hobbies: "Chiropterology", weight: 80, height: 182},
+#   {name: "Joffery Baratheon", cohort: :december, hobbies: "Hunting", weight: 60, height: 172},
+#   {name: "Norman Bates", cohort: :december, hobbies: "Taxidermy", weight: 82, height: 185}
+# ]
 
 @months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ]
-# @students = []
+@students = []
 
 # prints header txt
 def print_header
@@ -23,20 +23,20 @@ def print_header
 end
 
 # prints the key value pairs of the hash given as the arguement 
-# def print(names)
-#   names.each do |student|
-#     puts "#{student[:name]} (#{student[:cohort]} cohort)"
-#   end
-# end
-
-# print rewritten to demonstrate while loop control flow
 def print_student_list
-  count = 0
-  while count < @students.count
-    puts "#{@students[count].fetch(:name)} (#{@students[count].fetch(:cohort)} cohort)".center(70)
-    count += 1
+  @students.each do |student|
+    puts "#{student[:name]} (#{student[:cohort]} cohort)".center(70)
   end
 end
+
+# print rewritten to demonstrate while loop control flow
+# def print_student_list
+#   count = 0
+#   while count < @students.count
+#     puts "#{@students[count].fetch(:name)} (#{@students[count].fetch(:cohort)} cohort)".center(70)
+#     count += 1
+#   end
+# end
 
 # prints footer text showing the total number of students in the given arguement 
 def print_footer
@@ -50,7 +50,7 @@ def input_students
   puts "their name and specific cohort start month.".center(70)
   puts "To return to the menu, type \"back\" at the name entry stage.".center(70)
   loop do
-    @students << { name: enter_name, cohort: enter_cohort.to_sym }
+    update_students(enter_name, enter_cohort)
     if @students.count == 1
       puts "Now we have 1 student!".center(70)
       print_student_list
@@ -171,7 +171,7 @@ def enter_name
     puts "Please enter the name of the student:".center(70) 
     name = STDIN.gets.chomp
     puts "You entered \"#{name}\" is this correct? Y/N".center(70)
-    result = gets.chomp.downcase
+    result = STDIN.gets.chomp.downcase
     if result == "y"
       return name
       break
@@ -229,9 +229,14 @@ def load_students(filename = "students.csv")
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')
-    @students << {name: name, cohort: cohort.to_sym}
+  update_students(name, cohort)
   end
   file.close
+end
+
+# removed the duplication of this code adding students to the array
+def update_students(name, cohort)
+  @students << {name: name, cohort: cohort.to_sym}
 end
 
 # checks if filename exists and then pushes to load_students else quits

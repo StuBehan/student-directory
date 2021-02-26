@@ -44,7 +44,7 @@ def selection
   selection = STDIN.gets.chomp
   case selection
   when "1"
-    @students = input_students()
+    input_students
   when "2"
     print_header
     print_student_list

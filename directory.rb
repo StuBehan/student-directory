@@ -27,6 +27,7 @@ end
 
 # outputs the options for the interactive menu
 def print_menu
+  puts "\n"
   puts "Welcome to the Student Directory".center(70)
   puts "Please make a selection from the menu".center(70)
   puts "-------------".center(70)
@@ -44,14 +45,18 @@ def selection
   selection = STDIN.gets.chomp
   case selection
   when "1"
+    puts "Input new Students".center(70) 
     input_students
   when "2"
+    puts "Print list of Students".center(70)
     print_header
     print_student_list
     print_footer
   when "3"
+    puts "Save to file".center(70)
     save_students
   when "4"
+    puts "Load from file".center(70)
     load_students
   when "5"
     print_cohort
@@ -223,8 +228,11 @@ def print_cohort
 end
 
 # saves the @students array to a CSV file
-def save_students
-  file = File.open("students.csv", "w")
+def save_students(filename = get_filename)
+  if filename.empty?
+    filename = "students.csv"
+  end
+  file = File.open(filename, "w")
   @students.each do |student|
     student_data = [student[:name], student[:cohort]]
     csv_line = student_data.join(",")
@@ -233,8 +241,17 @@ def save_students
   file.close
 end
 
+# reusable filename entry
+def get_filename
+  puts "Enter a filename to work with, press enter to use the default".center(70)
+   filename = STDIN.gets.strip.downcase
+end
+
 # load @students from the CSV file
-def load_students(filename = "students.csv")
+def load_students(filename = get_filename)
+  if filename.empty?
+    filename = "students.csv"
+  end
   file = File.open(filename, "r")
   file.readlines.each do |line|
   name, cohort = line.chomp.split(',')

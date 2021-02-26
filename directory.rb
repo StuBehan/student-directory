@@ -1,3 +1,5 @@
+require 'csv'
+
 # students listed in an array of key value pairs 
 # @students = [
 #   {name: "Dr. Hannibal Lecter", cohort: :november, hobbies: "Music", weight: 76, height: 173},
@@ -12,6 +14,18 @@
 #   {name: "Joffery Baratheon", cohort: :december, hobbies: "Hunting", weight: 60, height: 172},
 #   {name: "Norman Bates", cohort: :december, hobbies: "Taxidermy", weight: 82, height: 185}
 # ]
+
+# Dr. Hannibal Lecter,november
+# Darth Vader,november
+# Nurse Ratched,november
+# Michael Corleone,november
+# Alex Delarge,november
+# The Wicked Witch of the West,november
+# Terminator,december
+# Freddy Krueger,december
+# The Joker,december
+# Joffery Baratheon,december
+# Norman Bates,december
 
 @months = [ "january", "february", "march", "april", "may", "june", "july", "august", "september", "october", "november", "december" ]
 
@@ -253,9 +267,8 @@ def load_students(filename = get_filename)
     filename = "students.csv"
   end
   File.open(filename, "r") do |file|
-    file.readlines.each do |line|
-      name, cohort = line.chomp.split(',')
-      update_students(name, cohort)
+    CSV.foreach(file) do |row|
+      update_students(row[0], row[1])
     end
   end
 end

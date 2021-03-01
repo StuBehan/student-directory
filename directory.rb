@@ -41,17 +41,17 @@ end
 
 # outputs the options for the interactive menu
 def print_menu
-  puts "\n"
-  puts "Welcome to the Student Directory".center(70)
-  puts "Please make a selection from the menu".center(70)
-  puts "-------------".center(70)
-  puts "1. Input students".center(70)
-  puts "2. Show students".center(70)
-  puts "3. Save the student data to students.csv".center(70)
-  puts "4. Load the student data from students.csv".center(70)
-  puts "5. Select and show a specific cohorts students".center(70)
-  puts "6. Find students via the first letter of their name".center(70)
-  puts "9. Exit".center(70)
+  print "\n
+         Welcome to the Student Directory
+         Please make a selection from the menu
+         -------------
+         1. Input students
+         2. Show students
+         3. Save the student data to students.csv
+         4. Load the student data from students.csv
+         5. Select and show a specific cohorts students
+         6. Find students via the first letter of their name
+         9. Exit\n".center(70)
 end
 
 # runs the menu selections
